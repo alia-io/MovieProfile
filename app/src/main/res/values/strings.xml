@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">MovieProfile</string>
+    <!--About Me Profile/Header-->
+    <string name="full_name">Kendra Smith</string>
+    <string name="profession">Executive Producer</string>
+    <string name="email">ksmith@gmail.com</string>
 </resources>
