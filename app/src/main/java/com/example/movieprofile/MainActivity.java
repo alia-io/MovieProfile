@@ -6,25 +6,36 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private MovieData movieData;
     private DrawerLayout drawerLayout;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        movieData = new MovieData();
 
         Toolbar actionBar = findViewById(R.id.action_bar);
         setSupportActionBar(actionBar);
@@ -36,6 +47,20 @@ public class MainActivity extends AppCompatActivity
                 drawerLayout, actionBar, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
+
+        // Set initial fragment to a random movie
+        Map movie = movieData.getItem((int) (Math.random() * (movieData.getSize() - 1)));
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        MovieDetailFragment movieDetailFragment = MovieDetailFragment
+                .newInstance((int) movie.get("image"), movie.get("name").toString(),
+                        movie.get("year").toString(), movie.get("length").toString(),
+                        Float.parseFloat(movie.get("rating").toString()),
+                        movie.get("director").toString(), movie.get("stars").toString(),
+                        movie.get("description").toString(), movie.get("url").toString());
+        fragmentTransaction.replace(R.id.fragment_container, movieDetailFragment);
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+        fragmentTransaction.commit();
     }
 
     @Override
