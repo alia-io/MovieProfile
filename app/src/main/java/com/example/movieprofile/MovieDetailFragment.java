@@ -1,5 +1,9 @@
 package com.example.movieprofile;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -10,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 
 public class MovieDetailFragment extends Fragment {
@@ -49,17 +55,16 @@ public class MovieDetailFragment extends Fragment {
         poster.setImageResource(args.getInt("id"));
         title.setText(args.getString("title"));
         rating.setRating(args.getFloat("rating"));
-        year.setText(Html.fromHtml("<b><font size='16' color='#D05353'>Year: </b></font>"
-                + "<br><font size='14' color='#FFD6C0'>" + args.getString("year") + "</font>"));
-        director.setText(Html.fromHtml("<b><font size='16' color='#D05353'>Director: </b></font>"
-                + "<br><font size='14' color='#FFD6C0'>" + args.getString("director") + "</font>"));
-        stars.setText(Html.fromHtml("<b><font size='16' color='#D05353'>Stars: </b></font>"
-                + "<br><font size='14' color='#FFD6C0'>" + args.getString("stars") + "</font>"));
-        runtime.setText(Html.fromHtml("<b><font size='16' color='#D05353'>Runtime: </b></font>"
-                + "<br><font size='14' color='#FFD6C0'>" + args.getString("length") + "</font>"));
-        /*link.setText(Html.fromHtml("<b><font size='16' color='#D05353'>Link: </b></font>"
-                + "<font size='14' color='#FFD6C0'>" + args.getString("url") + "</font>"));*/
+        year.setText(args.getString("year"));
+        director.setText(args.getString("director"));
+        stars.setText(args.getString("stars"));
+        runtime.setText(args.getString("length"));
+        //link.setText(args.getString("url"));
         description.setText(args.getString("description"));
+
+        LayerDrawable layerDrawable = (LayerDrawable) rating.getProgressDrawable();
+        layerDrawable.getDrawable(0).setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
+        layerDrawable.getDrawable(2).setColorFilter(Color.parseColor("#FBFF12"), PorterDuff.Mode.SRC_ATOP);
 
         return view;
     }

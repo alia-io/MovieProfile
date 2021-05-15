@@ -11,4 +11,8 @@
     <color name="dark_text">#491919</color>
     <color name="light_border">#FFECDB</color>
     <color name="light_text">#FFECDB</color>
+    <color name="secondary_light_text">#FFD6C0</color>
+    <color name="star_color">#FBFF12</color>
+    <color name="movie_title_color">#2AB7CA</color>
+    <color name="fragment_field_color">#D05353</color>
 </resources>

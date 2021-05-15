@@ -10,4 +10,9 @@
     <string name="movie_list_text">Movie List</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <!--Movie Detail Fragment Fields-->
+    <string name="year_title">Year:</string>
+    <string name="director_title">Director:</string>
+    <string name="stars_title">Stars:</string>
+    <string name="runtime_title">Runtime:</string>
 </resources>

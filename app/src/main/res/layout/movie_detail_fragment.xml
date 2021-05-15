@@ -16,18 +16,15 @@
             android:padding="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <TextView
                 android:id="@+id/tv_title"
-                android:textColor="#2AB7CA"
-                android:textSize="28sp"
-                android:textStyle="bold"
-                android:gravity="center"
+                style="@style/MovieTitleStyle"
                 android:paddingBottom="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent" />
+
             <LinearLayout
                 android:id="@+id/ll_rating"
                 android:orientation="horizontal"
@@ -40,71 +37,98 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_title">
                 <RatingBar
                     android:id="@+id/rb_rating"
-                    android:numStars="10"
-                    android:stepSize="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     style="@style/RatingBar" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/movie_data_container"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="180dp"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/ll_rating">
+
                 <ImageView
                     android:id="@+id/iv_poster"
                     android:padding="5dp"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content" />
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_weight="1"
                     android:layout_gravity="center_vertical"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content">
+
                     <TextView
-                        android:id="@+id/tv_year"
-                        android:paddingBottom="5dp"
-                        android:gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_year_field"
+                        android:text="@string/year_title"
+                        style="@style/MovieFieldHeaderStyle"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                     <TextView
-                        android:id="@+id/tv_director"
+                        android:id="@+id/tv_year"
+                        style="@style/MovieFragmentDataStyle"
                         android:paddingBottom="5dp"
-                        android:gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_year_field" />
+
+                    <TextView
+                        android:id="@+id/tv_director_field"
+                        android:text="@string/director_title"
+                        style="@style/MovieFieldHeaderStyle"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_year" />
                     <TextView
-                        android:id="@+id/tv_stars"
+                        android:id="@+id/tv_director"
+                        style="@style/MovieFragmentDataStyle"
                         android:paddingBottom="5dp"
-                        android:gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_director_field" />
+
+                    <TextView
+                        android:id="@+id/tv_stars_field"
+                        android:text="@string/stars_title"
+                        style="@style/MovieFieldHeaderStyle"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_director" />
                     <TextView
-                        android:id="@+id/tv_runtime"
-                        android:gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_stars"
+                        style="@style/MovieFragmentDataStyle"
+                        android:paddingBottom="5dp"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_stars_field" />
+
+                    <TextView
+                        android:id="@+id/tv_runtime_field"
+                        android:text="@string/runtime_title"
+                        style="@style/MovieFieldHeaderStyle"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_stars" />
+                    <TextView
+                        android:id="@+id/tv_runtime"
+                        style="@style/MovieFragmentDataStyle"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_runtime_field" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
+
             <TextView
                 android:id="@+id/tv_description"
-                android:textColor="#FFECDB"
+                style="@style/DefaultFontStyle"
+                android:textColor="@color/light_text"
+                android:textSize="12sp"
                 android:paddingTop="5dp"
                 android:gravity="center"
                 android:layout_width="wrap_content"
@@ -112,6 +136,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/movie_data_container" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.cardview.widget.CardView>
