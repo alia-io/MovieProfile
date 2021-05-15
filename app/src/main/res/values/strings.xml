@@ -15,4 +15,9 @@
     <string name="director_title">Director:</string>
     <string name="stars_title">Stars:</string>
     <string name="runtime_title">Runtime:</string>
+    <!--About Me Fragment Fields-->
+    <string name="profession_title">Profession:</string>
+    <string name="email_title">Email:</string>
+    <string name="about_me_title">About Me:</string>
+    <string name="about_me_text">Hello! My name is Kendra Smith, and I\'ve been an Executive Producer for 7 years. Feel free to explore some of my favorite movies!</string>
 </resources>

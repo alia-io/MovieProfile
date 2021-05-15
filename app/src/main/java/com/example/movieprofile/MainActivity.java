@@ -6,19 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -58,7 +52,7 @@ public class MainActivity extends AppCompatActivity
                         Float.parseFloat(movie.get("rating").toString()),
                         movie.get("director").toString(), movie.get("stars").toString(),
                         movie.get("description").toString(), movie.get("url").toString());
-        fragmentTransaction.replace(R.id.fragment_container, movieDetailFragment);
+        fragmentTransaction.add(R.id.fragment_container, movieDetailFragment);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
         fragmentTransaction.commit();
     }
@@ -94,7 +88,7 @@ public class MainActivity extends AppCompatActivity
 
         switch (item.getItemId()) {
             case profileActionId:
-                Toast.makeText(getApplicationContext(), "Profile Action", Toast.LENGTH_SHORT).show();
+                setAboutMeFragment();
                 break;
             case movieDetailsActionId:
                 Toast.makeText(getApplicationContext(), "Movie Details Action", Toast.LENGTH_SHORT).show();
@@ -106,5 +100,14 @@ public class MainActivity extends AppCompatActivity
         }
 
         return true;
+    }
+
+    private void setAboutMeFragment() {
+        AboutMeFragment aboutMeFragment = new AboutMeFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, aboutMeFragment);
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        fragmentTransaction.commit();
     }
 }
