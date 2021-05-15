@@ -1,7 +1,13 @@
 <resources>
-    <string name="app_name">MovieProfile</string>
+    <string name="app_name">Movie Profile</string>
     <!--About Me Profile/Header-->
     <string name="full_name">Kendra Smith</string>
     <string name="profession">Executive Producer</string>
     <string name="email">ksmith@gmail.com</string>
+    <!--Action Bar/Drawer Menu-->
+    <string name="profile_text">About Me</string>
+    <string name="movie_details_text">Movie Details</string>
+    <string name="movie_list_text">Movie List</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 </resources>

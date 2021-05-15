@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/profile_action"
+        android:title="@string/profile_text"
+        android:icon="@drawable/ic_profile"
+        app:showAsAction="always" />
+    <item android:id="@+id/movie_details_action"
+        android:title="@string/movie_details_text"
+        android:icon="@drawable/ic_movie_details"
+        app:showAsAction="always" />
+    <item android:id="@+id/movie_list_action"
+        android:title="@string/movie_list_text"
+        android:icon="@drawable/ic_movie_list"
+        app:showAsAction="always" />
+</menu>

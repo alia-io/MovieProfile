@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="dark_border">#491919</color>
     <color name="dark_text">#491919</color>
+    <color name="light_border">#FFECDB</color>
+    <color name="light_text">#FFECDB</color>
 </resources>

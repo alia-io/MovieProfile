@@ -4,15 +4,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer"
-    android:fitsSystemWindows="true"
+    android:fitsSystemWindows="false"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/action_bar"
+            android:background="@color/light_border"
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view"
         android:layout_gravity="start"
         app:headerLayout="@layout/header_layout"
+        app:menu="@menu/task_menu"
+        app:itemIconTint="@color/light_border"
+        app:itemTextColor="@color/light_text"
+        app:itemTextAppearance="@style/MenuItemStyle"
+        android:background="@color/dark_border"
         android:layout_width="wrap_content"
         android:layout_height="match_parent" />
 </androidx.drawerlayout.widget.DrawerLayout>
