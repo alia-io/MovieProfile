@@ -2,26 +2,25 @@ package com.example.movieprofile;
 
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 
 public class MovieDetailFragment extends Fragment {
 
+    private MainActivity parent;
+
     public static MovieDetailFragment newInstance(int id, String title, String year, String length,
-            float rating, String director, String stars, String decription, String url) {
+            float rating, String director, String stars, String description, String url) {
         MovieDetailFragment movieDetailFragment = new MovieDetailFragment();
         Bundle args = new Bundle();
         args.putInt("id", id);
@@ -31,11 +30,13 @@ public class MovieDetailFragment extends Fragment {
         args.putFloat("rating", rating);
         args.putString("director", director);
         args.putString("stars", stars);
-        args.putString("description", decription);
+        args.putString("description", description);
         args.putString("url", url);
         movieDetailFragment.setArguments(args);
         return movieDetailFragment;
     }
+
+    public void setParent(MainActivity parent) { this.parent = parent; }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,6 +53,11 @@ public class MovieDetailFragment extends Fragment {
         //TextView link = view.findViewById(R.id.tv_url);
         TextView description = view.findViewById(R.id.tv_description);
 
+        if (parent != null) {
+            Log.d("FRAGMENTS", "Parent Not Null");
+            view.setVisibility(View.INVISIBLE);
+        }
+
         poster.setImageResource(args.getInt("id"));
         title.setText(args.getString("title"));
         rating.setRating(args.getFloat("rating"));
@@ -66,7 +72,17 @@ public class MovieDetailFragment extends Fragment {
         layerDrawable.getDrawable(0).setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
         layerDrawable.getDrawable(2).setColorFilter(Color.parseColor("#FBFF12"), PorterDuff.Mode.SRC_ATOP);
 
+        view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                if (parent != null) {
+                    parent.setMaxFragmentWidth(view.getWidth());
+                    parent.setMaxFragmentHeight(view.getHeight());
+                    parent.setAboutMeFragment();
+                }
+            }
+        });
         return view;
     }
-
 }

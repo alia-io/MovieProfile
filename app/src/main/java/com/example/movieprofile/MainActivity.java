@@ -9,6 +9,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,37 +25,30 @@ public class MainActivity extends AppCompatActivity
 
     private MovieData movieData;
     private DrawerLayout drawerLayout;
+    private int maxFragmentWidth;
+    private int maxFragmentHeight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         movieData = new MovieData();
+        maxFragmentWidth = 0;
+        maxFragmentHeight = 0;
 
         Toolbar actionBar = findViewById(R.id.action_bar);
         setSupportActionBar(actionBar);
 
         NavigationView navigationView = findViewById(R.id.navigation_view);
         drawerLayout = findViewById(R.id.drawer);
+
         navigationView.setNavigationItemSelectedListener(this);
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this,
                 drawerLayout, actionBar, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
-        // Set initial fragment to a random movie
-        Map movie = movieData.getItem((int) (Math.random() * (movieData.getSize() - 1)));
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        MovieDetailFragment movieDetailFragment = MovieDetailFragment
-                .newInstance((int) movie.get("image"), movie.get("name").toString(),
-                        movie.get("year").toString(), movie.get("length").toString(),
-                        Float.parseFloat(movie.get("rating").toString()),
-                        movie.get("director").toString(), movie.get("stars").toString(),
-                        movie.get("description").toString(), movie.get("url").toString());
-        fragmentTransaction.add(R.id.fragment_container, movieDetailFragment);
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
-        fragmentTransaction.commit();
+        setMovieFragment(10, true); // Find the maximum size of a viewPager child fragment
     }
 
     @Override
@@ -82,16 +76,15 @@ public class MainActivity extends AppCompatActivity
     }
 
     private boolean onItemSelected(@NonNull MenuItem item) {
-        final int profileActionId = R.id.profile_action;
         final int movieDetailsActionId = R.id.movie_details_action;
         final int movieListActionId = R.id.movie_list_action;
 
         switch (item.getItemId()) {
-            case profileActionId:
-                setAboutMeFragment();
-                break;
             case movieDetailsActionId:
-                Toast.makeText(getApplicationContext(), "Movie Details Action", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, ViewPagerActivity.class);
+                intent.putExtra("WIDTH", maxFragmentWidth);
+                intent.putExtra("HEIGHT", maxFragmentHeight);
+                startActivity(intent);
                 break;
             case movieListActionId:
                 Toast.makeText(getApplicationContext(), "Movie List Action", Toast.LENGTH_SHORT).show();
@@ -102,7 +95,23 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    private void setAboutMeFragment() {
+    private void setMovieFragment(int index, boolean setParent) {
+        Map movie = movieData.getItem(index);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        MovieDetailFragment movieDetailFragment = MovieDetailFragment
+                .newInstance((int) movie.get("image"), movie.get("name").toString(),
+                        movie.get("year").toString(), movie.get("length").toString(),
+                        Float.parseFloat(movie.get("rating").toString()),
+                        movie.get("director").toString(), movie.get("stars").toString(),
+                        movie.get("description").toString(), movie.get("url").toString());
+        if (setParent) movieDetailFragment.setParent(this);
+        fragmentTransaction.add(R.id.fragment_container, movieDetailFragment);
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+        fragmentTransaction.commit();
+    }
+
+    public void setAboutMeFragment() {
         AboutMeFragment aboutMeFragment = new AboutMeFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -110,4 +119,7 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.commit();
     }
+
+    public void setMaxFragmentWidth(int width) { maxFragmentWidth = width; }
+    public void setMaxFragmentHeight(int height) { maxFragmentHeight = height; }
 }

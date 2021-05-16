@@ -8,13 +8,13 @@
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
     <style name="DefaultFontStyle" parent="SansSerifFont">
-        <item name="android:textColor">@color/light_color</item>
+        <item name="android:textColor">@color/theme_light_color</item>
     </style>
     <style name="MenuItemStyle" parent="DefaultFontStyle">
         <item name="android:textSize">16sp</item>
     </style>
     <style name="MovieTitleStyle" parent="SansSerifFont">
-        <item name="android:textColor">@color/movie_title_color</item>
+        <item name="android:textColor">@color/golden_orange</item>
         <item name="android:textSize">24sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:gravity">center</item>
@@ -22,7 +22,7 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
     <style name="MovieFieldHeaderStyle" parent="SansSerifFont">
-        <item name="android:textColor">@color/fragment_field_color</item>
+        <item name="android:textColor">@color/light_red</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:gravity">center</item>
@@ -30,7 +30,7 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
     <style name="MovieFragmentDataStyle" parent="SansSerifFont">
-        <item name="android:textColor">@color/secondary_light_color</item>
+        <item name="android:textColor">@color/light_peach</item>
         <item name="android:textSize">12sp</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_width">wrap_content</item>

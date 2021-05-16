@@ -2,13 +2,13 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/dark_color"
+    android:background="@color/theme_dark_color"
     android:layout_width="match_parent"
     android:layout_height="250dp">
     <androidx.cardview.widget.CardView
         app:cardCornerRadius="10dp"
         android:layout_margin="5dp"
-        android:background="@color/dark_color"
+        android:background="@color/theme_dark_color"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <RelativeLayout
@@ -25,7 +25,7 @@
                 android:layout_height="110dp" />
             <androidx.cardview.widget.CardView
                 app:cardCornerRadius="50dp"
-                android:background="@color/dark_color"
+                android:background="@color/theme_dark_color"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="5dp"
                 android:layout_alignParentEnd="true"
@@ -42,7 +42,7 @@
                 android:id="@+id/tv_full_name"
                 android:text="@string/full_name"
                 android:textSize="24sp"
-                android:textColor="@color/dark_color"
+                android:textColor="@color/theme_dark_color"
                 android:textStyle="bold"
                 android:layout_marginEnd="10dp"
                 android:layout_alignParentEnd="true"
@@ -53,7 +53,7 @@
                 android:id="@+id/tv_profession"
                 android:text="@string/profession"
                 android:textSize="18sp"
-                android:textColor="@color/dark_color"
+                android:textColor="@color/theme_dark_color"
                 android:textStyle="bold"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
