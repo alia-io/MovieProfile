@@ -22,6 +22,8 @@ public class ViewPagerActivity extends FragmentActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawerLayout;
+    //private int fragmentWidth;
+    //private int fragmentHeight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,20 @@ public class ViewPagerActivity extends FragmentActivity
         tabLayout.setupWithViewPager(viewPager);
     }
 
+    /*@Override
+    protected void onSaveInstanceState(final Bundle outState) {
+        outState.putInt("WIDTH", fragmentWidth);
+        outState.putInt("HEIGHT", fragmentHeight);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(final Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        fragmentWidth = savedInstanceState.getInt("WIDTH");
+        fragmentHeight = savedInstanceState.getInt("HEIGHT");
+    }*/
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         if (onItemSelected(item)) {
@@ -63,18 +79,14 @@ public class ViewPagerActivity extends FragmentActivity
 
     private boolean onItemSelected(@NonNull MenuItem item) {
         final int profileActionId = R.id.profile_action;
-        final int movieDetailsActionId = R.id.movie_details_action;
         final int movieListActionId = R.id.movie_list_action;
 
         switch (item.getItemId()) {
             case profileActionId:
                 startActivity(new Intent(this, MainActivity.class));
                 break;
-            case movieDetailsActionId:
-                Toast.makeText(getApplicationContext(), "Movie Details Action", Toast.LENGTH_SHORT).show();
-                return false;
             case movieListActionId:
-                Toast.makeText(getApplicationContext(), "Movie List Action", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, MasterDetailFlowActivity.class));
                 break;
             default: return false;
         }

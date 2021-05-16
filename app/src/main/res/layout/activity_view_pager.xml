@@ -45,7 +45,7 @@
         app:menu="@menu/task_menu"
         app:itemIconTint="@color/theme_light_color"
         app:itemTextColor="@color/theme_light_color"
-        app:itemTextAppearance="@style/MenuItemStyle"
+        style="@style/MenuItemStyle"
         android:background="@color/theme_dark_color"
         android:layout_width="wrap_content"
         android:layout_height="match_parent" />

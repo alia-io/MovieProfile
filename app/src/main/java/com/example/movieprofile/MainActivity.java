@@ -48,8 +48,24 @@ public class MainActivity extends AppCompatActivity
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
-        setMovieFragment(10, true); // Find the maximum size of a viewPager child fragment
+        if (savedInstanceState == null) {
+            setMovieFragment(10, true); // Find the maximum size of a viewPager child fragment
+        }
     }
+
+    /*@Override
+    protected void onSaveInstanceState(final Bundle outState) {
+        outState.putInt("WIDTH", maxFragmentWidth);
+        outState.putInt("HEIGHT", maxFragmentHeight);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(final Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        maxFragmentWidth = savedInstanceState.getInt("WIDTH");
+        maxFragmentHeight = savedInstanceState.getInt("HEIGHT");
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -78,16 +94,20 @@ public class MainActivity extends AppCompatActivity
     private boolean onItemSelected(@NonNull MenuItem item) {
         final int movieDetailsActionId = R.id.movie_details_action;
         final int movieListActionId = R.id.movie_list_action;
+        Intent intent;
 
         switch (item.getItemId()) {
             case movieDetailsActionId:
-                Intent intent = new Intent(this, ViewPagerActivity.class);
+                intent = new Intent(this, ViewPagerActivity.class);
                 intent.putExtra("WIDTH", maxFragmentWidth);
                 intent.putExtra("HEIGHT", maxFragmentHeight);
                 startActivity(intent);
                 break;
             case movieListActionId:
-                Toast.makeText(getApplicationContext(), "Movie List Action", Toast.LENGTH_SHORT).show();
+                intent = new Intent(this, MasterDetailFlowActivity.class);
+                intent.putExtra("WIDTH", maxFragmentWidth);
+                intent.putExtra("HEIGHT", maxFragmentHeight);
+                startActivity(intent);
                 break;
             default: return false;
         }
