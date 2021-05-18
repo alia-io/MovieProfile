@@ -1,7 +1,6 @@
 package com.example.movieprofile;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -12,8 +11,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -21,13 +18,7 @@ import com.google.android.material.navigation.NavigationView;
 public class MasterDetailFlowActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private MovieData movieData;
     private DrawerLayout drawerLayout;
-
-    ListView listView;
-    Integer[] imageIds;
-    String[] titles;
-    private boolean twoPane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +29,9 @@ public class MasterDetailFlowActivity extends AppCompatActivity
         Toolbar actionBar = ActivitySetupUtilities.setUpActionBar(this);
         drawerLayout = ActivitySetupUtilities.setUpDrawer(this, this, actionBar);
 
-        movieData = new MovieData();
-        imageIds = new Integer[movieData.getSize()];
-        titles = new String[movieData.getSize()];
-        twoPane = false;
-
-        if (findViewById(R.id.detail_container) != null) twoPane = true;
+        if (savedInstanceState == null)
+            getSupportFragmentManager().beginTransaction().replace(
+                    R.id.list_container, new MovieListFragment()).commit();
     }
 
     @Override

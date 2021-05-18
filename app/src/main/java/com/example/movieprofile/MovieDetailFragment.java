@@ -72,6 +72,7 @@ public class MovieDetailFragment extends Fragment {
         layerDrawable.getDrawable(0).setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
         layerDrawable.getDrawable(2).setColorFilter(Color.parseColor("#FBFF12"), PorterDuff.Mode.SRC_ATOP);
 
+        // Sets the appropriate size of a movie detail fragment when the app starts up
         view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
