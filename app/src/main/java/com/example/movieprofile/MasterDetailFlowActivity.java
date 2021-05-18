@@ -70,12 +70,14 @@ public class MasterDetailFlowActivity extends AppCompatActivity
         switch (item.getItemId()) {
             case profileActionId:
                 startActivity(new Intent(this, MainActivity.class));
+                finish();
                 break;
             case movieDetailsActionId:
                 intent = new Intent(this, ViewPagerActivity.class);
                 intent.putExtra("WIDTH", maxFragmentWidth);
                 intent.putExtra("HEIGHT", maxFragmentHeight);
                 startActivity(intent);
+                finish();
                 return false;
             default: return false;
         }

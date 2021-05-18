@@ -85,12 +85,14 @@ public class ViewPagerActivity extends FragmentActivity
         switch (item.getItemId()) {
             case profileActionId:
                 startActivity(new Intent(this, MainActivity.class));
+                finish();
                 break;
             case movieListActionId:
                 intent = new Intent(this, MasterDetailFlowActivity.class);
                 intent.putExtra("WIDTH", maxFragmentWidth);
                 intent.putExtra("HEIGHT", maxFragmentHeight);
                 startActivity(intent);
+                finish();
                 break;
             default: return false;
         }
