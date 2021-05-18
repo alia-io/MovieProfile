@@ -22,16 +22,16 @@ public class ViewPagerActivity extends FragmentActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawerLayout;
-    //private int fragmentWidth;
-    //private int fragmentHeight;
+    private int maxFragmentWidth;
+    private int maxFragmentHeight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_pager);
 
-        int width = getIntent().getIntExtra("WIDTH", 300);
-        int height = getIntent().getIntExtra("HEIGHT", 500);
+        maxFragmentWidth = getIntent().getIntExtra("WIDTH", 300);
+        maxFragmentHeight = getIntent().getIntExtra("HEIGHT", 500);
 
         NavigationView navigationView = findViewById(R.id.navigation_view);
         drawerLayout = findViewById(R.id.drawer);
@@ -43,8 +43,8 @@ public class ViewPagerActivity extends FragmentActivity
 
         // Set viewPager size to maximum movie fragment size
         ViewGroup.LayoutParams layoutParams = viewPager.getLayoutParams();
-        layoutParams.width = width;
-        layoutParams.height = height;
+        layoutParams.width = maxFragmentWidth;
+        layoutParams.height = maxFragmentHeight;
         viewPager.requestLayout();
 
         CollectionPagerAdapter collectionPagerAdapter = new CollectionPagerAdapter(getSupportFragmentManager(),
@@ -80,13 +80,17 @@ public class ViewPagerActivity extends FragmentActivity
     private boolean onItemSelected(@NonNull MenuItem item) {
         final int profileActionId = R.id.profile_action;
         final int movieListActionId = R.id.movie_list_action;
+        Intent intent;
 
         switch (item.getItemId()) {
             case profileActionId:
                 startActivity(new Intent(this, MainActivity.class));
                 break;
             case movieListActionId:
-                startActivity(new Intent(this, MasterDetailFlowActivity.class));
+                intent = new Intent(this, MasterDetailFlowActivity.class);
+                intent.putExtra("WIDTH", maxFragmentWidth);
+                intent.putExtra("HEIGHT", maxFragmentHeight);
+                startActivity(intent);
                 break;
             default: return false;
         }

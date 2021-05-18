@@ -24,6 +24,7 @@ public class MovieListAdapter extends ArrayAdapter<String> {
     @Override
     public View getView(final int position, View view, ViewGroup parent) {
 
+        // Implementation of ViewHolder pattern
         MovieListViewHolder movieListViewHolder;
 
         if (view == null) {

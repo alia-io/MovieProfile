@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -19,11 +18,16 @@ public class MasterDetailFlowActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawerLayout;
+    private int maxFragmentWidth;
+    private int maxFragmentHeight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_master_detail_flow);
+
+        maxFragmentWidth = getIntent().getIntExtra("WIDTH", 300);
+        maxFragmentHeight = getIntent().getIntExtra("HEIGHT", 500);
 
         // Set up Action Bar and Drawer
         Toolbar actionBar = ActivitySetupUtilities.setUpActionBar(this);
@@ -61,19 +65,18 @@ public class MasterDetailFlowActivity extends AppCompatActivity
     private boolean onItemSelected(@NonNull MenuItem item) {
         final int profileActionId = R.id.profile_action;
         final int movieDetailsActionId = R.id.movie_details_action;
-        final int movieListActionId = R.id.movie_list_action;
+        Intent intent;
 
         switch (item.getItemId()) {
             case profileActionId:
                 startActivity(new Intent(this, MainActivity.class));
                 break;
             case movieDetailsActionId:
-                Toast.makeText(getApplicationContext(), "Movie Details Action", Toast.LENGTH_SHORT).show();
-
+                intent = new Intent(this, ViewPagerActivity.class);
+                intent.putExtra("WIDTH", maxFragmentWidth);
+                intent.putExtra("HEIGHT", maxFragmentHeight);
+                startActivity(intent);
                 return false;
-            case movieListActionId:
-                Toast.makeText(getApplicationContext(), "Movie List Action", Toast.LENGTH_SHORT).show();
-                break;
             default: return false;
         }
         return true;
