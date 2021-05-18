@@ -23,12 +23,40 @@ public class MovieListAdapter extends ArrayAdapter<String> {
 
     @Override
     public View getView(final int position, View view, ViewGroup parent) {
-        LayoutInflater inflater = context.getLayoutInflater();
-        View layout = inflater.inflate(R.layout.movie_list_item, null, true);
-        ImageView image = layout.findViewById(R.id.list_movie_poster);
+
+        MovieListViewHolder movieListViewHolder;
+
+        if (view == null) {
+            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+            view = inflater.inflate(R.layout.movie_list_item, parent, false);
+            movieListViewHolder = new MovieListViewHolder(
+                    view.findViewById(R.id.list_movie_poster), view.findViewById(R.id.list_movie_title));
+            view.setTag(movieListViewHolder);
+        } else {
+            movieListViewHolder = (MovieListViewHolder) view.getTag();
+        }
+
+        movieListViewHolder.getPoster().setImageResource(imageIds[position]);
+        movieListViewHolder.getTitle().setText(titles[position]);
+        return view;
+
+        /*LayoutInflater inflater = context.getLayoutInflater();
+        View layout = inflater.inflate(R.layout.movie_list_item, parent, false);
+        ImageView poster = layout.findViewById(R.id.list_movie_poster);
         TextView title = layout.findViewById(R.id.list_movie_title);
-        image.setImageResource(imageIds[position]);
+        poster.setImageResource(imageIds[position]);
         title.setText(titles[position]);
-        return layout;
+        return layout;*/
+    }
+
+    public static class MovieListViewHolder {
+        private final ImageView poster;
+        private final TextView title;
+        public MovieListViewHolder(ImageView poster, TextView title) {
+            this.poster = poster;
+            this.title = title;
+        }
+        public ImageView getPoster() { return poster; }
+        public TextView getTitle() { return title; }
     }
 }

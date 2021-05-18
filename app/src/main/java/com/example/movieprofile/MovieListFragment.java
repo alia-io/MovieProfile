@@ -51,22 +51,19 @@ public class MovieListFragment extends Fragment {
         MovieListAdapter adapter = new MovieListAdapter(activity, titles, imageIds);
         ListView listView = view.findViewById(R.id.list_view);
         listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Map movie = movieData.getItem(position);
-                MovieDetailFragment movieDetailFragment = MovieDetailFragment.newInstance(
-                        (int) movie.get("image"), movie.get("name").toString(), movie.get("year").toString(),
-                        movie.get("length").toString(), Float.parseFloat(movie.get("rating").toString()),
-                        movie.get("director").toString(), movie.get("stars").toString(),
-                        movie.get("description").toString(), movie.get("url").toString());
-                if (twoPane) {
-                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.detail_container,
-                            movieDetailFragment).addToBackStack(null).commit();
-                } else {
-                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.list_container,
-                            movieDetailFragment).addToBackStack(null).commit();
-                }
+        listView.setOnItemClickListener((parent, view1, position, id) -> {
+            Map movie = movieData.getItem(position);
+            MovieDetailFragment movieDetailFragment = MovieDetailFragment.newInstance(
+                    (int) movie.get("image"), movie.get("name").toString(), movie.get("year").toString(),
+                    movie.get("length").toString(), Float.parseFloat(movie.get("rating").toString()),
+                    movie.get("director").toString(), movie.get("stars").toString(),
+                    movie.get("description").toString(), movie.get("url").toString());
+            if (twoPane) {
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.detail_container,
+                        movieDetailFragment).addToBackStack(null).commit();
+            } else {
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.list_container,
+                        movieDetailFragment).addToBackStack(null).commit();
             }
         });
         return view;
