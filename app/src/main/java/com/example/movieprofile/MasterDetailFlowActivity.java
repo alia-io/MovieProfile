@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -19,28 +21,27 @@ import com.google.android.material.navigation.NavigationView;
 public class MasterDetailFlowActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private boolean twoPane;
     private MovieData movieData;
     private DrawerLayout drawerLayout;
+
+    ListView listView;
+    Integer[] imageIds;
+    String[] titles;
+    private boolean twoPane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_master_detail_flow);
+
+        // Set up Action Bar and Drawer
+        Toolbar actionBar = ActivitySetupUtilities.setUpActionBar(this);
+        drawerLayout = ActivitySetupUtilities.setUpDrawer(this, this, actionBar);
+
         movieData = new MovieData();
+        imageIds = new Integer[movieData.getSize()];
+        titles = new String[movieData.getSize()];
         twoPane = false;
-
-        Toolbar actionBar = findViewById(R.id.action_bar);
-        setSupportActionBar(actionBar);
-
-        NavigationView navigationView = findViewById(R.id.navigation_view);
-        drawerLayout = findViewById(R.id.drawer);
-
-        navigationView.setNavigationItemSelectedListener(this);
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this,
-                drawerLayout, actionBar, R.string.open, R.string.close);
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
 
         if (findViewById(R.id.detail_container) != null) twoPane = true;
     }
