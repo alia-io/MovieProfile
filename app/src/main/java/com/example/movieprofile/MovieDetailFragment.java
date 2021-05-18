@@ -54,7 +54,6 @@ public class MovieDetailFragment extends Fragment {
         TextView description = view.findViewById(R.id.tv_description);
 
         if (parent != null) {
-            Log.d("FRAGMENTS", "Parent Not Null");
             view.setVisibility(View.INVISIBLE);
         }
 
@@ -81,6 +80,8 @@ public class MovieDetailFragment extends Fragment {
                     parent.setMaxFragmentWidth(view.getWidth());
                     parent.setMaxFragmentHeight(view.getHeight());
                     parent.setAboutMeFragment();
+                    view.setVisibility(View.VISIBLE);
+                    parent = null;
                 }
             }
         });

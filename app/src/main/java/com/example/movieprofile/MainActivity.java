@@ -1,7 +1,6 @@
 package com.example.movieprofile;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -11,11 +10,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -33,23 +30,14 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.d("ActivityCycle", "onCreate");
 
         movieData = new MovieData();
         maxFragmentWidth = 0;
         maxFragmentHeight = 0;
 
-        Toolbar actionBar = findViewById(R.id.action_bar);
-        setSupportActionBar(actionBar);
-
-        NavigationView navigationView = findViewById(R.id.navigation_view);
-        drawerLayout = findViewById(R.id.drawer);
-
-        navigationView.setNavigationItemSelectedListener(this);
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this,
-                drawerLayout, actionBar, R.string.open, R.string.close);
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
+        // Set up Action Bar and Drawer
+        Toolbar actionBar = ActivitySetupUtilities.setUpActionBar(this);
+        drawerLayout = ActivitySetupUtilities.setUpDrawer(this, this, actionBar);
 
         if (savedInstanceState == null) {
             setMovieFragment(10, true); // Find the maximum size of a viewPager child fragment
