@@ -23,40 +23,19 @@ public class MainActivity extends AppCompatActivity
 
     private MovieData movieData;
     private DrawerLayout drawerLayout;
-    private int maxFragmentWidth;
-    private int maxFragmentHeight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         movieData = new MovieData();
-        maxFragmentWidth = 0;
-        maxFragmentHeight = 0;
 
         // Set up Action Bar and Drawer
         Toolbar actionBar = ActivitySetupUtilities.setUpActionBar(this);
         drawerLayout = ActivitySetupUtilities.setUpDrawer(this, this, actionBar);
 
-        if (savedInstanceState == null) {
-            setMovieFragment(10, true); // Find the maximum size of a viewPager child fragment
-        }
+        setAboutMeFragment();
     }
-
-    /*@Override
-    protected void onSaveInstanceState(final Bundle outState) {
-        outState.putInt("WIDTH", maxFragmentWidth);
-        outState.putInt("HEIGHT", maxFragmentHeight);
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(final Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        maxFragmentWidth = savedInstanceState.getInt("WIDTH");
-        maxFragmentHeight = savedInstanceState.getInt("HEIGHT");
-    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -85,20 +64,13 @@ public class MainActivity extends AppCompatActivity
     private boolean onItemSelected(@NonNull MenuItem item) {
         final int movieDetailsActionId = R.id.movie_details_action;
         final int movieListActionId = R.id.movie_list_action;
-        Intent intent;
 
         switch (item.getItemId()) {
             case movieDetailsActionId:
-                intent = new Intent(this, ViewPagerActivity.class);
-                intent.putExtra("WIDTH", maxFragmentWidth);
-                intent.putExtra("HEIGHT", maxFragmentHeight);
-                startActivity(intent);
+                startActivity(new Intent(this, ViewPagerActivity.class));
                 break;
             case movieListActionId:
-                intent = new Intent(this, MasterDetailFlowActivity.class);
-                intent.putExtra("WIDTH", maxFragmentWidth);
-                intent.putExtra("HEIGHT", maxFragmentHeight);
-                startActivity(intent);
+                startActivity(new Intent(this, MasterDetailFlowActivity.class));
                 break;
             default: return false;
         }
@@ -106,6 +78,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    // Keeping this here in case I ever need to display a fragment by itself
     private void setMovieFragment(int index, boolean setParent) {
         Map movie = movieData.getItem(index);
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -130,7 +103,4 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.commit();
     }
-
-    public void setMaxFragmentWidth(int width) { maxFragmentWidth = width; }
-    public void setMaxFragmentHeight(int height) { maxFragmentHeight = height; }
 }

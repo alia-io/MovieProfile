@@ -53,9 +53,9 @@ public class MovieDetailFragment extends Fragment {
         //TextView link = view.findViewById(R.id.tv_url);
         TextView description = view.findViewById(R.id.tv_description);
 
-        if (parent != null) {
-            view.setVisibility(View.INVISIBLE);
-        }
+        //if (parent == null) {
+            //view.setVisibility(View.VISIBLE);
+        //}
 
         poster.setImageResource(args.getInt("id"));
         title.setText(args.getString("title"));
@@ -72,7 +72,7 @@ public class MovieDetailFragment extends Fragment {
         layerDrawable.getDrawable(2).setColorFilter(Color.parseColor("#FBFF12"), PorterDuff.Mode.SRC_ATOP);
 
         // Sets the appropriate size of a movie detail fragment when the app starts up
-        view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        /*view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
@@ -84,7 +84,7 @@ public class MovieDetailFragment extends Fragment {
                     parent = null;
                 }
             }
-        });
+        });*/
         return view;
     }
 }

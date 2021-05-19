@@ -1,7 +1,5 @@
 package com.example.movieprofile;
 
-import android.view.View;
-
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;

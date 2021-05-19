@@ -5,17 +5,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import java.util.Map;
 
 public class MovieListFragment extends Fragment {
 
-    private AppCompatActivity activity;
+    private MasterDetailFlowActivity activity;
     private MovieData movieData;
     private Integer[] imageIds;
     private String[] titles;
@@ -26,9 +24,9 @@ public class MovieListFragment extends Fragment {
         super.onAttach(context);
 
         try {
-            activity = (AppCompatActivity) context;
+            activity = (MasterDetailFlowActivity) context;
         } catch (ClassCastException ex) {
-            throw new ClassCastException(context.toString() + " must extend AppCompatActivity.");
+            throw new ClassCastException(context.toString() + " must be MasterDetailFlowActivity.");
         }
 
         movieData = new MovieData();
@@ -65,6 +63,7 @@ public class MovieListFragment extends Fragment {
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.list_container,
                         movieDetailFragment).addToBackStack(null).commit();
             }
+            activity.setMovieFragmentOpen(true);
         });
         return view;
     }

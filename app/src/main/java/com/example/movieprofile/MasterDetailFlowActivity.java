@@ -18,16 +18,12 @@ public class MasterDetailFlowActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawerLayout;
-    private int maxFragmentWidth;
-    private int maxFragmentHeight;
+    private boolean movieFragmentOpen = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_master_detail_flow);
-
-        maxFragmentWidth = getIntent().getIntExtra("WIDTH", 300);
-        maxFragmentHeight = getIntent().getIntExtra("HEIGHT", 500);
 
         // Set up Action Bar and Drawer
         Toolbar actionBar = ActivitySetupUtilities.setUpActionBar(this);
@@ -65,7 +61,7 @@ public class MasterDetailFlowActivity extends AppCompatActivity
     private boolean onItemSelected(@NonNull MenuItem item) {
         final int profileActionId = R.id.profile_action;
         final int movieDetailsActionId = R.id.movie_details_action;
-        Intent intent;
+        final int movieListActionId = R.id.movie_list_action;
 
         switch (item.getItemId()) {
             case profileActionId:
@@ -73,14 +69,19 @@ public class MasterDetailFlowActivity extends AppCompatActivity
                 finish();
                 break;
             case movieDetailsActionId:
-                intent = new Intent(this, ViewPagerActivity.class);
-                intent.putExtra("WIDTH", maxFragmentWidth);
-                intent.putExtra("HEIGHT", maxFragmentHeight);
-                startActivity(intent);
+                startActivity(new Intent(this, ViewPagerActivity.class));
                 finish();
                 return false;
+            case movieListActionId:
+                if (movieFragmentOpen) {
+                    onBackPressed();
+                    movieFragmentOpen = false;
+                }
+                break;
             default: return false;
         }
         return true;
     }
+
+    public void setMovieFragmentOpen(boolean open) { movieFragmentOpen = open; }
 }

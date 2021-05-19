@@ -8,7 +8,10 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,16 +24,11 @@ public class ViewPagerActivity extends FragmentActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawerLayout;
-    private int maxFragmentWidth;
-    private int maxFragmentHeight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_pager);
-
-        maxFragmentWidth = getIntent().getIntExtra("WIDTH", 300);
-        maxFragmentHeight = getIntent().getIntExtra("HEIGHT", 500);
 
         NavigationView navigationView = findViewById(R.id.navigation_view);
         drawerLayout = findViewById(R.id.drawer);
@@ -40,10 +38,26 @@ public class ViewPagerActivity extends FragmentActivity
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         ViewPager viewPager = findViewById(R.id.view_pager);
 
-        // Set viewPager size to maximum movie fragment size
+        // Set viewPager size
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int screenWidth = displayMetrics.widthPixels;
+        int screenHeight = displayMetrics.heightPixels;
+        int screenLayoutSize = getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
         ViewGroup.LayoutParams layoutParams = viewPager.getLayoutParams();
-        layoutParams.width = maxFragmentWidth;
-        layoutParams.height = maxFragmentHeight;
+        if ((screenLayoutSize == Configuration.SCREENLAYOUT_SIZE_LARGE)
+                || screenLayoutSize == Configuration.SCREENLAYOUT_SIZE_XLARGE) {
+            if (screenWidth < screenHeight) {
+                layoutParams.height = (int) (screenHeight * 0.4);
+                layoutParams.width = (int) (screenWidth * 0.5);
+            } else {
+                layoutParams.height = (int) (screenHeight * 0.5);
+                layoutParams.width = (int) (screenWidth * 0.4);
+            }
+        } else {
+            layoutParams.width = (int) (screenWidth * 0.9);
+            layoutParams.height = (int) (screenHeight * 0.6);
+        }
         viewPager.requestLayout();
 
         CollectionPagerAdapter collectionPagerAdapter = new CollectionPagerAdapter(getSupportFragmentManager(),
@@ -52,20 +66,6 @@ public class ViewPagerActivity extends FragmentActivity
         viewPager.setPageTransformer(true, new DepthPageTransformer());
         tabLayout.setupWithViewPager(viewPager);
     }
-
-    /*@Override
-    protected void onSaveInstanceState(final Bundle outState) {
-        outState.putInt("WIDTH", fragmentWidth);
-        outState.putInt("HEIGHT", fragmentHeight);
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(final Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        fragmentWidth = savedInstanceState.getInt("WIDTH");
-        fragmentHeight = savedInstanceState.getInt("HEIGHT");
-    }*/
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -79,7 +79,6 @@ public class ViewPagerActivity extends FragmentActivity
     private boolean onItemSelected(@NonNull MenuItem item) {
         final int profileActionId = R.id.profile_action;
         final int movieListActionId = R.id.movie_list_action;
-        Intent intent;
 
         switch (item.getItemId()) {
             case profileActionId:
@@ -87,10 +86,7 @@ public class ViewPagerActivity extends FragmentActivity
                 finish();
                 break;
             case movieListActionId:
-                intent = new Intent(this, MasterDetailFlowActivity.class);
-                intent.putExtra("WIDTH", maxFragmentWidth);
-                intent.putExtra("HEIGHT", maxFragmentHeight);
-                startActivity(intent);
+                startActivity(new Intent(this, MasterDetailFlowActivity.class));
                 finish();
                 break;
             default: return false;
