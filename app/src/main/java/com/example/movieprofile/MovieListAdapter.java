@@ -8,22 +8,20 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/* Sets the MovieListItems in the ListView (Task #3 - Master view) */
 public class MovieListAdapter extends ArrayAdapter<String> {
 
-    private final Activity context;
     private final String[] titles;
     private final Integer[] imageIds;
 
     public MovieListAdapter(Activity context, String[] titles, Integer[] imageIds) {
         super(context, R.layout.movie_list_item, titles);
-        this.context = context;
         this.titles = titles;
         this.imageIds = imageIds;
     }
 
     @Override
     public View getView(final int position, View view, ViewGroup parent) {
-
         // Implementation of ViewHolder pattern
         MovieListViewHolder movieListViewHolder;
 
@@ -40,14 +38,6 @@ public class MovieListAdapter extends ArrayAdapter<String> {
         movieListViewHolder.getPoster().setImageResource(imageIds[position]);
         movieListViewHolder.getTitle().setText(titles[position]);
         return view;
-
-        /*LayoutInflater inflater = context.getLayoutInflater();
-        View layout = inflater.inflate(R.layout.movie_list_item, parent, false);
-        ImageView poster = layout.findViewById(R.id.list_movie_poster);
-        TextView title = layout.findViewById(R.id.list_movie_title);
-        poster.setImageResource(imageIds[position]);
-        title.setText(titles[position]);
-        return layout;*/
     }
 
     public static class MovieListViewHolder {

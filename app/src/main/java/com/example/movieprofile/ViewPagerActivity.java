@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,7 @@ import android.view.ViewGroup;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
-/* Task 2 */
+/* Activity for Task #2 (ViewPager) */
 public class ViewPagerActivity extends FragmentActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -38,7 +37,18 @@ public class ViewPagerActivity extends FragmentActivity
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         ViewPager viewPager = findViewById(R.id.view_pager);
 
-        // Set viewPager size
+        setViewPagerSize(viewPager); // Set viewPager size based on screen size
+
+        // Set up the ViewPager and TabLayout
+        CollectionPagerAdapter collectionPagerAdapter = new CollectionPagerAdapter(getSupportFragmentManager(),
+                FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, movieData);
+        viewPager.setAdapter(collectionPagerAdapter);
+        viewPager.setPageTransformer(true, new DepthPageTransformer());
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
+    /* Sets the size of the ViewPager MovieDetailFragments according to the device screen size */
+    private void setViewPagerSize(ViewPager viewPager) {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int screenWidth = displayMetrics.widthPixels;
@@ -59,15 +69,10 @@ public class ViewPagerActivity extends FragmentActivity
             layoutParams.height = (int) (screenHeight * 0.6);
         }
         viewPager.requestLayout();
-
-        CollectionPagerAdapter collectionPagerAdapter = new CollectionPagerAdapter(getSupportFragmentManager(),
-                FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, movieData);
-        viewPager.setAdapter(collectionPagerAdapter);
-        viewPager.setPageTransformer(true, new DepthPageTransformer());
-        tabLayout.setupWithViewPager(viewPager);
     }
 
     @Override
+    /* Navigation for Drawer items */
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         if (onItemSelected(item)) {
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -76,6 +81,7 @@ public class ViewPagerActivity extends FragmentActivity
         return false;
     }
 
+    /* Handles navigation to other activities */
     private boolean onItemSelected(@NonNull MenuItem item) {
         final int profileActionId = R.id.profile_action;
         final int movieListActionId = R.id.movie_list_action;
@@ -94,6 +100,7 @@ public class ViewPagerActivity extends FragmentActivity
         return true;
     }
 
+    /* Handles ViewPager transitions between fragments */
     public static class DepthPageTransformer implements ViewPager.PageTransformer {
         private static final float MIN_SCALE = 0.75f;
         @Override

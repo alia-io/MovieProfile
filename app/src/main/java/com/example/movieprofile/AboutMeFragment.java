@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+/* Fragment for the "About Me" profile */
 public class AboutMeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

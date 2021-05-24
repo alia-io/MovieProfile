@@ -14,11 +14,12 @@ import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
 
+/* Activity for Task #3 (Master/Detail Flow) */
 public class MasterDetailFlowActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawerLayout;
-    private boolean movieFragmentOpen = false;
+    private boolean movieFragmentOpen = false; // Is detail fragment currently displayed?
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,7 @@ public class MasterDetailFlowActivity extends AppCompatActivity
         Toolbar actionBar = ActivitySetupUtilities.setUpActionBar(this);
         drawerLayout = ActivitySetupUtilities.setUpDrawer(this, this, actionBar);
 
+        // Add the ListView fragment to the container
         if (savedInstanceState == null)
             getSupportFragmentManager().beginTransaction().replace(
                     R.id.list_container, new MovieListFragment()).commit();
@@ -42,14 +44,14 @@ public class MasterDetailFlowActivity extends AppCompatActivity
     }
 
     @Override
-    // Navigation for ActionBar items
+    /* Navigation for ActionBar items */
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (onItemSelected(item)) return true;
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    // Navigation for Drawer items
+    /* Navigation for Drawer items */
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         if (onItemSelected(item)) {
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -58,6 +60,7 @@ public class MasterDetailFlowActivity extends AppCompatActivity
         return false;
     }
 
+    /* Handles navigation to other activities */
     private boolean onItemSelected(@NonNull MenuItem item) {
         final int profileActionId = R.id.profile_action;
         final int movieDetailsActionId = R.id.movie_details_action;
@@ -73,14 +76,18 @@ public class MasterDetailFlowActivity extends AppCompatActivity
                 finish();
                 return false;
             case movieListActionId:
-                if (movieFragmentOpen) {
-                    onBackPressed();
-                    movieFragmentOpen = false;
-                }
+                // If detail fragment is currently displayed, go back to ListView fragment
+                if (movieFragmentOpen) onBackPressed();
                 break;
             default: return false;
         }
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        setMovieFragmentOpen(false);
+        super.onBackPressed();
     }
 
     public void setMovieFragmentOpen(boolean open) { movieFragmentOpen = open; }

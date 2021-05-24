@@ -11,13 +11,15 @@ import androidx.fragment.app.Fragment;
 
 import java.util.Map;
 
+/* Sets the MovieDetailFragments in the appropriate container (Task #3 - Detail view) */
 public class MovieListFragment extends Fragment {
 
     private MasterDetailFlowActivity activity;
     private MovieData movieData;
     private Integer[] imageIds;
     private String[] titles;
-    private boolean twoPane;
+    private boolean twoPane; // Replace the ListView or put MovieDetailFragment in a different container?
+                                    // (dependent on screen size)
 
     @Override
     public void onAttach(Context context) {
@@ -40,6 +42,7 @@ public class MovieListFragment extends Fragment {
             titles[i] = movie.get("name").toString();
         }
 
+        // Determine whether MovieDetailFragment is placed in list container or detail container (screen size)
         if (activity.findViewById(R.id.detail_container) != null) twoPane = true;
     }
 
@@ -50,21 +53,26 @@ public class MovieListFragment extends Fragment {
         ListView listView = view.findViewById(R.id.list_view);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener((parent, view1, position, id) -> {
-            Map movie = movieData.getItem(position);
-            MovieDetailFragment movieDetailFragment = MovieDetailFragment.newInstance(
-                    (int) movie.get("image"), movie.get("name").toString(), movie.get("year").toString(),
-                    movie.get("length").toString(), Float.parseFloat(movie.get("rating").toString()),
-                    movie.get("director").toString(), movie.get("stars").toString(),
-                    movie.get("description").toString(), movie.get("url").toString());
-            if (twoPane) {
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.detail_container,
-                        movieDetailFragment).addToBackStack(null).commit();
-            } else {
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.list_container,
-                        movieDetailFragment).addToBackStack(null).commit();
-            }
-            activity.setMovieFragmentOpen(true);
+            setMovieDetailFragment(position);
         });
         return view;
+    }
+
+    /* Renders the MovieDetailFragment in the appropriate container */
+    private void setMovieDetailFragment(int position) {
+        Map movie = movieData.getItem(position);
+        MovieDetailFragment movieDetailFragment = MovieDetailFragment.newInstance(
+                (int) movie.get("image"), movie.get("name").toString(), movie.get("year").toString(),
+                movie.get("length").toString(), Float.parseFloat(movie.get("rating").toString()),
+                movie.get("director").toString(), movie.get("stars").toString(),
+                movie.get("description").toString(), movie.get("url").toString());
+        if (twoPane) {
+            activity.getSupportFragmentManager().beginTransaction().replace(R.id.detail_container,
+                    movieDetailFragment).addToBackStack(null).commit();
+        } else {
+            activity.getSupportFragmentManager().beginTransaction().replace(R.id.list_container,
+                    movieDetailFragment).addToBackStack(null).commit();
+        }
+        activity.setMovieFragmentOpen(true);
     }
 }

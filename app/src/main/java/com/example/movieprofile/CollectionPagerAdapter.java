@@ -1,7 +1,5 @@
 package com.example.movieprofile;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -9,6 +7,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import java.util.Map;
 
+/* Sets the MovieDetailFragments for ViewPager (Task #2) */
 public class CollectionPagerAdapter extends FragmentStatePagerAdapter {
 
     MovieData movieData;

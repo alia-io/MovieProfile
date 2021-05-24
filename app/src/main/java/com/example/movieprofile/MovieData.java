@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/* Contains all the movie data */
 public class MovieData {
 
     List<Map<String,?>> moviesList;

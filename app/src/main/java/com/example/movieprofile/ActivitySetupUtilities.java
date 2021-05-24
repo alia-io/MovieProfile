@@ -7,6 +7,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
+/* Methods used to set up the ActionBar and Drawer in activities with both */
 public class ActivitySetupUtilities {
 
     public static Toolbar setUpActionBar(AppCompatActivity activity) {

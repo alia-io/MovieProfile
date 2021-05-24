@@ -18,6 +18,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.Map;
 
+/* Main activity - displays "About Me" profile and allows navigation to other activities */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -45,14 +46,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    // Navigation for ActionBar items
+    /* Navigation for ActionBar items */
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (onItemSelected(item)) return true;
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    // Navigation for Drawer items
+    /* Navigation for Drawer items */
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         if (onItemSelected(item)) {
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity
         return false;
     }
 
+    /* Handles navigation to other activities */
     private boolean onItemSelected(@NonNull MenuItem item) {
         final int movieDetailsActionId = R.id.movie_details_action;
         final int movieListActionId = R.id.movie_list_action;
@@ -79,7 +81,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     // Keeping this here in case I ever need to display a fragment by itself
-    private void setMovieFragment(int index, boolean setParent) {
+    // (method is not currently being used in the project)
+    private void setMovieFragment(int index) {
         Map movie = movieData.getItem(index);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -89,12 +92,12 @@ public class MainActivity extends AppCompatActivity
                         Float.parseFloat(movie.get("rating").toString()),
                         movie.get("director").toString(), movie.get("stars").toString(),
                         movie.get("description").toString(), movie.get("url").toString());
-        if (setParent) movieDetailFragment.setParent(this);
         fragmentTransaction.add(R.id.fragment_container, movieDetailFragment);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
         fragmentTransaction.commit();
     }
 
+    /* Sets the "About Me" fragment into the main page fragment container */
     public void setAboutMeFragment() {
         AboutMeFragment aboutMeFragment = new AboutMeFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
